@@ -1023,63 +1023,115 @@ body::after {
   }
 }
 
-/* --- PROFESSIONAL RESEARCH HUB --- */
+/**************************************/
+/* --- GLOBAL VARIABLES & RESET --- */
 
+
+/* --- SECTION STYLING --- */
 .research-section {
-    padding: 80px 0;
-    background: 
-    radial-gradient(2px 2px at 20px 30px, var(--accent), transparent),
-    radial-gradient(2px 2px at 40px 70px, var(--accent-2), transparent),
-    radial-gradient(1px 1px at 90px 40px, var(--accent), transparent),
-    radial-gradient(1px 1px at 130px 80px, var(--accent-2), transparent),
-    radial-gradient(2px 2px at 160px 30px, var(--accent), transparent);
+    padding: 100px 0;
+    background-color: var(--bg-dark);
+    /* Arxa fona yüngül "Grid" (Tor) naxışı əlavə edirik - Cyber hissiyat üçün */
+    background-image: 
+        linear-gradient(var(--border-color) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border-color) 1px, transparent 1px);
+    background-size: 40px 40px;
+    background-position: center top;
 }
 
 .section-header {
     text-align: center;
-    margin-bottom: 50px;
+    max-width: 800px;
+    margin: 0 auto 60px auto;
+}
+
+.section-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    background: linear-gradient(90deg, #fff, #888);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.5px;
 }
 
 .section-subtitle {
-    color: #888;
-    font-size: 0.95rem;
-    margin-top: 10px;
+    color: var(--text-muted);
+    font-size: 1rem;
+    line-height: 1.6;
 }
 
-/* GRID LAYOUT - Əsas Struktur */
+/* --- MAIN GRID LAYOUT --- */
 .research-grid {
     display: grid;
-    grid-template-columns: 280px 1fr; /* Sol tərəf sabit, sağ tərəf elastik */
-    gap: 30px;
-    background: #0f0f0f;
-    border: 1px solid #222;
-    border-radius: 12px;
+    /* Sol tərəfi 300px-dən 350px-ə qaldırdıq */
+    grid-template-columns: 350px 1fr; 
+    background: rgba(10, 10, 10, 0.95);
+    border: 1px solid var(--border-color);
+    border-radius: 20px; /* Küncləri biraz daha yumşaltdıq */
     overflow: hidden;
-    min-height: 500px;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    
+    /* Hündürlüyü 600px-dən 800px-ə qaldırdıq */
+    min-height: 800px; 
+    
+    box-shadow: 0 30px 100px rgba(0, 0, 0, 0.7); /* Kölgəni də böyütdük */
+    backdrop-filter: blur(10px);
 }
 
-/* SIDEBAR - Sol Panel */
+/* --- SIDEBAR STYLING --- */
 .research-sidebar {
-    background: #0a0a0a;
-    border-right: 1px solid #222;
-    padding: 20px 0;
+    background: var(--bg-panel);
+    border-right: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
     overflow-y: auto;
 }
 
+/* Custom Scrollbar for Sidebar */
+.research-sidebar::-webkit-scrollbar {
+    width: 5px;
+}
+.research-sidebar::-webkit-scrollbar-track {
+    background: transparent;
+}
+.research-sidebar::-webkit-scrollbar-thumb {
+    background: #333;
+    border-radius: 4px;
+}
+
+/* Navigation Groups */
 .nav-group {
-    margin-bottom: 5px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
 }
 
 .nav-header {
-    padding: 12px 20px;
+    /* Padding-i artırdıq */
+    padding: 22px 30px; 
     cursor: pointer;
     display: flex;
     align-items: center;
-    color: #ccc;
-    font-weight: 500;
-    transition: background 0.2s;
+    color: var(--text-main);
+    font-weight: 600;
+    
+    /* Şrifti böyütdük */
+    font-size: 1.1rem; 
+    
+    transition: all var(--transition-speed);
     user-select: none;
+}
+
+.nav-item {
+    /* Daxili boşluqları artırdıq */
+    padding: 15px 30px 15px 60px; 
+    
+    /* Şrifti 0.9-dan 1rem-ə qaldırdıq */
+    font-size: 1.5rem; 
+    
+    color: var(--text-muted);
+    cursor: pointer;
+    border-left: 3px solid transparent; /* Sol xətti qalınlaşdırdıq */
+    transition: all 0.2s;
+    position: relative;
 }
 
 .nav-header:hover {
@@ -1088,42 +1140,54 @@ body::after {
 }
 
 .nav-header .icon {
-    margin-right: 10px;
-    opacity: 0.7;
+    margin-right: 12px;
+    font-size: 1.1rem;
+    filter: grayscale(100%);
+    transition: filter var(--transition-speed);
+}
+
+.nav-header:hover .icon, 
+.nav-group.active .nav-header .icon {
+    filter: grayscale(0%);
 }
 
 .nav-header .arrow {
     margin-left: auto;
-    font-size: 1.2rem;
+    font-size: 0.8rem;
     color: #555;
-    transition: transform 0.3s ease;
+    transition: transform var(--transition-speed) ease;
 }
 
-/* Aktiv qrupda ox aşağı dönür */
+/* Active Group State */
 .nav-group.active .arrow {
     transform: rotate(90deg);
-    color: #ff4d4d;
+    color: var(--accent-color);
 }
 
-/* Alt menyular (Tree view) */
+.nav-group.active .nav-header {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+/* Nav Items (Accordion Content) */
 .nav-items {
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.4s ease;
-    background: #050505;
+    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    background: #080808;
 }
 
 .nav-group.active .nav-items {
-    max-height: 500px; /* Açılma limiti */
+    max-height: 800px; /* Yetərincə böyük dəyər */
 }
 
 .nav-item {
-    padding: 10px 20px 10px 45px; /* Soldan boşluq */
+    padding: 12px 25px 12px 52px; /* İerarxiya üçün daha çox boşluq */
     font-size: 0.9rem;
-    color: #777;
+    color: var(--text-muted);
     cursor: pointer;
     border-left: 2px solid transparent;
     transition: all 0.2s;
+    position: relative;
 }
 
 .nav-item:hover {
@@ -1131,84 +1195,146 @@ body::after {
     background: rgba(255, 255, 255, 0.02);
 }
 
-/* Seçilmiş element */
+/* Nav Item Selected State */
 .nav-item.selected {
-    color: #ff4d4d; /* Vurğu rəngi */
-    background: rgba(255, 77, 77, 0.05);
-    border-left: 2px solid #ff4d4d;
+    color: #fff;
+    background: linear-gradient(90deg, var(--accent-glow), transparent);
+    border-left: 2px solid var(--accent-color);
 }
 
-/* MAIN CONTENT - Sağ Panel */
+.nav-item.selected::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    box-shadow: 0 0 10px var(--accent-color);
+}
+
+/* --- MAIN CONTENT AREA --- */
 .research-content {
-    padding: 30px;
+    /* Padding 40px-dən 60px-ə qalxdı */
+    padding: 60px; 
     position: relative;
+    background: var(--bg-dark);
+    background-image: radial-gradient(circle at top right, rgba(255, 77, 77, 0.03), transparent 500px);
 }
 
 .content-title {
-    font-size: 1.8rem;
-    color: #fff;
-    margin-bottom: 15px;
-    border-bottom: 1px solid #222;
-    padding-bottom: 15px;
+    /* Başlıq daha böyük oldu */
+    font-size: 2.5rem; 
+    margin-bottom: 30px;
+    padding-bottom: 25px;
 }
 
 .content-body {
-    font-size: 1rem;
-    line-height: 1.7;
-    color: #b0b0b0;
+    /* Mətn oxunaqlılığı artdı */
+    font-size: 1.15rem; 
+    line-height: 1.9;
+    color: #ccc;
 }
 
+/* --- TERMINAL EMPTY STATE --- */
 /* Terminal Loader (Boş olanda görünən) */
+
 .empty-state {
+
     display: flex;
+
     justify-content: center;
+
     align-items: center;
+
     height: 100%;
+
     color: #444;
+
 }
+
+
 
 .terminal-window {
+
     background: #000;
+
     border: 1px solid #333;
+
     padding: 15px;
+
     border-radius: 5px;
+
     font-family: 'Courier New', monospace;
+
     font-size: 0.9rem;
+
     color: #00ff00;
+
     width: 300px;
+
 }
+
+
 
 .terminal-header {
+
     display: flex;
+
     gap: 5px;
+
     margin-bottom: 10px;
+
 }
+
+
 
 .terminal-button {
+
     width: 10px;
+
     height: 10px;
+
     border-radius: 50%;
+
 }
+
 .red { background: #ff5f56; }
+
 .yellow { background: #ffbd2e; }
+
 .green { background: #27c93f; }
 
+
+
 .cursor {
+
     animation: blink 1s infinite;
+
 }
+
+
 
 @keyframes blink {
+
     50% { opacity: 0; }
+
 }
 
-/* Mobil Uyğunluq */
-@media (max-width: 768px) {
+/* --- RESPONSIVE DESIGN --- */
+@media (max-width: 992px) {
     .research-grid {
-        grid-template-columns: 1fr; /* Alt-alta düzülür */
+        grid-template-columns: 1fr;
+        height: auto;
+        min-height: auto;
     }
+    
     .research-sidebar {
         border-right: none;
-        border-bottom: 1px solid #222;
-        max-height: 300px;
+        border-bottom: 1px solid var(--border-color);
+        max-height: 400px; /* Mobildə sidebar çox yer tutmasın */
+    }
+
+    .section-title {
+        font-size: 2rem;
     }
 }
